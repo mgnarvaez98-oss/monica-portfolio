@@ -178,7 +178,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.66em;width:8px;he
       <div class="port">
         <div class="frame">
           <div class="mono" id="pMono">MN</div>
-          <img id="pPhoto" src="images/monica.jpg" alt="Portrait of Monica Narvaez" onerror="this.remove()">
+          <img id="pPhoto" src="monica.jpg" alt="Portrait of Monica Narvaez" onerror="this.remove()">
           <svg class="doodle hide" id="pDoodle" viewBox="0 0 200 250" role="img" aria-label="Line-drawn doodle of Monica holding a camera">
             <g fill="none" stroke="#18181b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M62 112c-6-46 14-70 38-70s46 24 38 70c-3 18 2 34 12 48M62 112c-4 22-12 38-20 50"/>
@@ -303,7 +303,7 @@ function renderCase(p){
   ${flow}
   <h2>The <em>process</em></h2><ol class="steps">${p.steps.map(s=>`<li><b>${esc(s[0])}</b><span>${esc(s[1])}</span></li>`).join("")}</ol>
   <h2>Key <em>iterations</em></h2><div>${p.iters.map((t,k)=>`<div class="iter"><small>Iteration ${k+1}</small><div><b>${esc(t[0])}</b><p>${esc(t[1])}</p></div></div>`).join("")}</div>
-  <div class="shots">${p.shots.map(s=>`<img src="images/${s}" alt="${esc(cap(p.name))} screen" loading="lazy" onerror="this.remove()">`).join("")}</div>
+  <div class="shots">${p.shots.map(s=>`<img src="${s}" alt="${esc(cap(p.name))} screen" loading="lazy" onerror="this.remove()">`).join("")}</div>
   <div class="two"><div><h2><em>Outcomes</em></h2><ul class="ticks">${li(p.out)}</ul>${p.credit?`<p class="note">${esc(p.credit)}</p>`:""}</div><div><h2>What I <em>learned</em></h2><p>${esc(p.learned)}</p></div></div>
   </div>
   <div class="nextp"><span style="color:var(--gray);font-weight:600">Next project</span><a href="#${n.id}">${esc(n.name)} →</a></div>
