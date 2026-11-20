@@ -63,7 +63,9 @@ nav .wrap{display:flex;justify-content:space-between;align-items:center;min-heig
 .tagline{color:var(--blue);font-weight:700;font-size:14px;margin-bottom:10px}
 .proj h2{font-size:clamp(30px,4vw,48px);max-width:22em;margin-bottom:26px}
 .proj h2 b{font-weight:400;color:var(--blue)}
-.panel{border-radius:26px;overflow:hidden;position:relative;aspect-ratio:16/8.4}
+.panel{border-radius:26px;overflow:hidden;position:relative;aspect-ratio:16/9}
+.panel .cimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.proj:hover .panel .cimg,.proj:focus-visible .panel .cimg{transform:scale(1.03)}
 .panel svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
 .proj:hover .panel svg,.proj:focus-visible .panel svg{transform:translateY(-10px) scale(1.015)}
 .t-b{background:var(--tb)}.t-r{background:var(--tr)}.t-g{background:var(--tg)}
@@ -143,7 +145,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.66em;width:8px;he
 .nextp{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:72px;padding-top:26px;border-top:1px solid var(--line)}
 .nextp a{font:400 clamp(28px,3.4vw,40px) "Instrument Serif",serif;text-decoration:none;color:var(--blue)}
 @media(max-width:860px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:700px){.about,.two{grid-template-columns:minmax(0,1fr)}.two{gap:0}.port{max-width:320px}.panel{aspect-ratio:4/3}.iter,.flow .row{grid-template-columns:minmax(0,1fr);gap:2px}.g1{left:20%;top:10%;width:110vw;height:110vw}}
+@media(max-width:700px){.about,.two{grid-template-columns:minmax(0,1fr)}.two{gap:0}.port{max-width:320px}.iter,.flow .row{grid-template-columns:minmax(0,1fr);gap:2px}.g1{left:20%;top:10%;width:110vw;height:110vw}}
 @media(pointer:coarse){.cur{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.cur{display:none}}
 </style>
@@ -235,6 +237,7 @@ fundminer:wrap(browser(140,56,520,330,`<rect y="26" width="110" height="304" fil
 fitsense:wrap(phone(240,70,`<rect x="18" y="36" width="80" height="9" rx="4" fill="${K}"/><circle cx="75" cy="112" r="44" fill="none" stroke="${T}" stroke-width="14"/><circle cx="75" cy="112" r="44" fill="none" stroke="${R}" stroke-width="14" stroke-linecap="round" stroke-dasharray="190 277" transform="rotate(-90 75 112)"/><rect x="57" y="106" width="36" height="11" rx="5" fill="${K}"/>${rows(18,176,3,[B,BD,R])}`)+phone(410,40,`<rect x="18" y="36" width="64" height="9" rx="4" fill="${K}"/><rect x="18" y="58" width="114" height="96" rx="12" fill="${T}"/><g fill="${BD}">${[0,1,2,3,4,5].map(i=>`<rect x="${30+i*16}" y="${140-(18+i*11)}" width="10" height="${18+i*11}" rx="3"/>`).join("")}</g>${rows(18,168,3,[R,B,BD])}`)+card(560,250,`<rect x="16" y="18" width="70" height="8" rx="4" fill="${K}"/><rect x="16" y="36" width="110" height="6" rx="3" fill="${G}"/><rect x="16" y="52" width="56" height="20" rx="10" fill="none" stroke="${K}" stroke-width="1.6"/>`)),
 goodreads:wrap(browser(120,50,560,340,`<rect x="34" y="50" width="130" height="190" rx="8" fill="${R}"/><rect x="34" y="50" width="20" height="190" rx="4" fill="#5b1528"/><rect x="72" y="100" width="70" height="8" rx="4" fill="${W}" opacity=".85"/><rect x="72" y="116" width="50" height="6" rx="3" fill="${W}" opacity=".5"/><rect x="194" y="54" width="260" height="18" rx="6" fill="${K}"/><rect x="194" y="82" width="150" height="9" rx="4" fill="${G}"/>${[0,1,2,3].map(i=>`<circle cx="${204+i*20}" cy="110" r="7" fill="${BD}"/>`).join("")}<circle cx="284" cy="110" r="7" fill="${G}"/><g fill="#efeff2"><rect x="194" y="136" width="320" height="7" rx="3"/><rect x="194" y="152" width="300" height="7" rx="3"/><rect x="194" y="168" width="220" height="7" rx="3"/></g><rect x="194" y="194" width="150" height="40" rx="20" fill="${K}"/><rect x="226" y="210" width="86" height="8" rx="4" fill="${W}"/><rect x="354" y="194" width="110" height="40" rx="20" fill="none" stroke="${K}" stroke-width="2"/><g fill="${T}">${[0,1,2,3,4].map(i=>`<rect x="${34+i*100}" y="262" width="88" height="56" rx="8"/>`).join("")}</g>`))
 };
+const img=p=>`<img class="cimg" src="${p.shots[0]}" alt="${esc(cap(p.name))} final design" onerror="this.remove()">`;
 const P=[
 {id:"gerd",tint:"t-b",tags:"Healthcare, design & build, mobile app",name:"trigger tracker",line:"making GERD management more intuitive",
 role:"UX designer & developer",time:"4 weeks",team:"Solo project",type:"Healthcare app",live:"https://trigger-tracker-theta.vercel.app/",
@@ -283,7 +286,7 @@ shots:["goodreads-final.png","goodreads-iteration-1.png","goodreads-iteration-2.
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const li=a=>a.map(x=>`<li>${esc(x)}</li>`).join("");
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
-document.getElementById("cards").innerHTML=P.map(p=>`<a class="proj" href="#${p.id}"><div class="tagline">${esc(p.tags)}</div><h2><b>${esc(p.name)}</b> — ${esc(p.line)}</h2><div class="panel ${p.tint}">${covers[p.id]}</div><span class="more">Read the case study →</span></a>`).join("");
+document.getElementById("cards").innerHTML=P.map(p=>`<a class="proj" href="#${p.id}"><div class="tagline">${esc(p.tags)}</div><h2><b>${esc(p.name)}</b> — ${esc(p.line)}</h2><div class="panel ${p.tint}">${covers[p.id]}${img(p)}</div><span class="more">Read the case study →</span></a>`).join("");
 const caseEl=document.getElementById("case");
 function renderCase(p){
   const n=P[(P.indexOf(p)+1)%P.length];
@@ -295,7 +298,7 @@ function renderCase(p){
   ${p.live?`<a class="btn" href="${p.live}" target="_blank" rel="noopener">Try the live prototype ↗</a>`:""}
   </div></section>
   <div class="wrap">
-  <div class="panel ${p.tint}">${covers[p.id]}</div>
+  <div class="panel ${p.tint}">${covers[p.id]}${img(p)}</div>
   <dl class="meta"><div><dt>Role</dt><dd>${esc(p.role)}</dd></div><div><dt>Timeline</dt><dd>${esc(p.time)}</dd></div><div><dt>Team</dt><dd>${esc(p.team)}</dd></div><div><dt>Type</dt><dd>${esc(p.type)}</dd></div></dl>
   <div class="cs">
   <h2>The <em>problem</em></h2><p>${esc(p.problem)}</p><p class="hmw">${esc(p.hmw)}</p>
@@ -303,7 +306,7 @@ function renderCase(p){
   ${flow}
   <h2>The <em>process</em></h2><ol class="steps">${p.steps.map(s=>`<li><b>${esc(s[0])}</b><span>${esc(s[1])}</span></li>`).join("")}</ol>
   <h2>Key <em>iterations</em></h2><div>${p.iters.map((t,k)=>`<div class="iter"><small>Iteration ${k+1}</small><div><b>${esc(t[0])}</b><p>${esc(t[1])}</p></div></div>`).join("")}</div>
-  <div class="shots">${p.shots.map(s=>`<img src="${s}" alt="${esc(cap(p.name))} screen" loading="lazy" onerror="this.remove()">`).join("")}</div>
+  <div class="shots">${p.shots.slice(1).map(s=>`<img src="${s}" alt="${esc(cap(p.name))} screen" loading="lazy" onerror="this.remove()">`).join("")}</div>
   <div class="two"><div><h2><em>Outcomes</em></h2><ul class="ticks">${li(p.out)}</ul>${p.credit?`<p class="note">${esc(p.credit)}</p>`:""}</div><div><h2>What I <em>learned</em></h2><p>${esc(p.learned)}</p></div></div>
   </div>
   <div class="nextp"><span style="color:var(--gray);font-weight:600">Next project</span><a href="#${n.id}">${esc(n.name)} →</a></div>
